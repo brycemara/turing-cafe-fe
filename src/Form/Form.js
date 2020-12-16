@@ -3,8 +3,8 @@ import './Form.css';
 
 
 class Form extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       name: '',
       date: '',
@@ -16,15 +16,15 @@ class Form extends Component {
     this.setState({ [event.target.name]: event.target.value})
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = (event, props) => {
     event.preventDefault()
 
     const newRes = {
+      id: Date.now(),
       name: this.state.name,
       date: this.state.date,
       time: this.state.time,
-      number: this.state.number,
-      id: Date.now()
+      number: parseInt(this.state.number),
     }
 
     this.props.addReservation(newRes)

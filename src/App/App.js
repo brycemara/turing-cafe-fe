@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Form from '../Form/Form'
-import { getAllReservations } from '../apiCalls.js'
+import { getAllReservations, postNewReservation, deleteReservation } from '../apiCalls.js'
 import Reservations from '../Reservations/Reservations';
 
 class App extends Component {
@@ -21,6 +21,13 @@ class App extends Component {
 
   addReservation = (newRes) => {
     this.setState({ reservations: [...this.state.reservations, newRes]})
+    postNewReservation(newRes)
+  }
+
+  deleteReservation = (id) => {
+    const filteredReservations = this.state.reservations.filter(reservation => reservation.id !== id)
+    this.setState({ reservations: filteredReservations})
+    deleteReservation(id)
   }
 
   render() {
@@ -31,7 +38,7 @@ class App extends Component {
           <Form addReservation={this.addReservation}/>
         </div>
         <div className='resy-container'>
-          <Reservations reservations={this.state.reservations} />
+          <Reservations reservations={this.state.reservations} deleteReservation={this.deleteReservation} />
         </div>
       </div>
     )
